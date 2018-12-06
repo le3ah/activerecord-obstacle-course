@@ -305,19 +305,20 @@ describe 'ActiveRecord Obstacle Course' do
     expected_result = [user_3.name, user_2.name]
 
     # ----------------------- Using Raw SQL-----------------------
-    users = ActiveRecord::Base.connection.execute("
-      select
-        distinct users.name
-      from users
-        join orders on orders.user_id=users.id
-        join order_items ON order_items.order_id=orders.id
-      where order_items.item_id=#{item_8.id}
-      ORDER BY users.name")
-    users = users.map {|u| u['name']}
+    # users = ActiveRecord::Base.connection.execute("
+    #   select
+    #     distinct users.name
+    #   from users
+    #     join orders on orders.user_id=users.id
+    #     join order_items ON order_items.order_id=orders.id
+    #   where order_items.item_id=#{item_8.id}
+    #   ORDER BY users.name")
+    # users = users.map {|u| u['name']}
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    users = User.distinct.joins(:orders, :order_items).where(order_items: {item_id: item_8}).pluck(:name)
+
     # ------------------------------------------------------------
 
     # Expectation
