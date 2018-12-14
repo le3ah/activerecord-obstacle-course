@@ -468,17 +468,18 @@ describe 'ActiveRecord Obstacle Course' do
     expected_result = [item_1, item_2, item_3, item_4, item_5, item_7, item_8, item_9, item_10]
 
     # ----------------------- Using Ruby -------------------------
-    items = Item.all
-
-    ordered_items = items.map do |item|
-      item if item.orders.present?
-    end
-
-    ordered_items = ordered_items.compact
+    # items = Item.all
+    #
+    # ordered_items = items.map do |item|
+    #   item if item.orders.present?
+    # end
+    #
+    # ordered_items = ordered_items.compact
     # ------------------------------------------------------------
 
     # ------------------ ActiveRecord Solution ----------------------
-    # Solution goes here
+    ordered_item_ids = OrderItem.pluck(:item_id)
+    ordered_items = Item.where(id: ordered_item_ids)
     # ---------------------------------------------------------------
 
     # Expectations
@@ -501,17 +502,18 @@ describe 'ActiveRecord Obstacle Course' do
     expected_result = ['Thing 1', 'Thing 2', 'Thing 3', 'Thing 4', 'Thing 5', 'Thing 7', 'Thing 8', 'Thing 9', 'Thing 10']
 
     # ----------------------- Using Ruby -------------------------
-    items = Item.all
-
-    ordered_items = items.map do |item|
-      item if item.orders.present?
-    end.compact
-
-    ordered_items_names = ordered_items.map(&:name)
+    # items = Item.all
+    #
+    # ordered_items = items.map do |item|
+    #   item if item.orders.present?
+    # end.compact
+    #
+    # ordered_items_names = ordered_items.map(&:name)
     # ------------------------------------------------------------
 
     # ------------------ ActiveRecord Solution ----------------------
-    # Solution goes here
+    ordered_item_ids = OrderItem.pluck(:item_id)
+    ordered_items_names = Item.where(id: ordered_item_ids).pluck(:name)
     # When you find a solution, experiment with adjusting your method chaining
     # Which ones are you able to switch around without relying on Ruby's Enumerable methods?
     # ---------------------------------------------------------------
