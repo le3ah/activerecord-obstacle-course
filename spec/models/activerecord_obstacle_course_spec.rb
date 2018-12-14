@@ -348,7 +348,8 @@ describe 'ActiveRecord Obstacle Course' do
     # grouped_orders = []
     # Order.all.each do |order|
     #   if order.items
-    #     grouped_orders << order if order.user_id == 3
+    #     grouped_orders << order
+    #     if order.user_id == 3
     #   end
     # end
     # grouped_orders.each_with_index do |order, idx|
@@ -432,12 +433,12 @@ describe 'ActiveRecord Obstacle Course' do
     expected_result = [order_3, order_5, order_9, order_10, order_11, order_13, order_15]
 
     # ------------------ Inefficient Solution -------------------
-    order_ids = OrderItem.where(item_id: item_4.id).map(&:order_id)
-    orders = order_ids.map { |id| Order.find(id) }
+    # order_ids = OrderItem.where(item_id: item_4.id).map(&:order_id)
+    # orders = order_ids.map { |id| Order.find(id) }
     # -----------------------------------------------------------
 
     # ------------------ Improved Solution ----------------------
-    #  Solution goes here
+    orders = Order.joins(:order_items).where("order_items.item_id = 4")
     # -----------------------------------------------------------
 
     # Expectation
