@@ -527,7 +527,7 @@ describe 'ActiveRecord Obstacle Course' do
     expect(ordered_items_names).to_not include(unordered_items)
   end
 
-  xit '27. returns a table of information for all users orders' do
+  it '27. returns a table of information for all users orders' do
     custom_results = [user_3, user_1, user_2]
 
     # using a single ActiveRecord call, fetch a joined object that mimics the
@@ -539,7 +539,8 @@ describe 'ActiveRecord Obstacle Course' do
     # Sal        |         5
 
     # ------------------ ActiveRecord Solution ----------------------
-    # custom_results =
+    # require 'pry'; binding.pry
+    custom_results = User.joins(:orders).select("users.name, count(orders.amount) as total_order_count").group("users.name")
     # ---------------------------------------------------------------
 
     expect(custom_results[0].name).to eq(user_3.name)
