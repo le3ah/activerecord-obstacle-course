@@ -574,7 +574,7 @@ describe 'ActiveRecord Obstacle Course' do
     expect(custom_results[2].total_item_count).to eq(20)
   end
 
-  xit '29. returns a table of information for all users orders and item counts' do
+  it '29. returns a table of information for all users orders and item counts' do
     # using a single ActiveRecord call, fetch a joined object that mimics the
     # following table of information:
     # --------------------------------------------------------------------------
@@ -609,7 +609,12 @@ describe 'ActiveRecord Obstacle Course' do
     # how will you turn this into the proper ActiveRecord commands?
 
     # ------------------ ActiveRecord Solution ----------------------
-    # data = []
+    data = User.joins(orders: :order_items)
+    .select("users.name as user_name, count(order_items.id) as item_count, orders.id as order_id")
+    .group("user_name")
+    .group("order_id")
+    .order("user_name DESC")
+
     # ---------------------------------------------------------------
 
 
