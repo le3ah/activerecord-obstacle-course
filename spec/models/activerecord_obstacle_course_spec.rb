@@ -90,8 +90,8 @@ describe 'ActiveRecord Obstacle Course' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    orders_of_500_and_700 = Order.where(amount: 500).or(Order.where(amount: 700))
-    orders_of_700_and_1000 = Order.where(amount: 700).or(Order.where(amount: 1000))
+    orders_of_500_and_700 = Order.where(amount: [500, 700])
+    orders_of_700_and_1000 = Order.where(amount: [700, 1000])
     # ------------------------------------------------------------
 
     # Expectation
@@ -168,7 +168,7 @@ describe 'ActiveRecord Obstacle Course' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    orders_of_user_3 = Order.where('id % ? = 0', 3)
+    orders_of_user_3 = Order.where(user_id: 3)
     # ------------------------------------------------------------
 
     # Expectation
